@@ -199,3 +199,80 @@ class Program
     }
 }
 ```
+### Create an array of integers and then save some integers to it, Now write a LINQ to find the secod highest number from array
+#### 🧩 Example
+```csharp
+using System;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        // Create an array of integers
+        int[] numbers = { 10, 20, 5, 30, 40, 20, 40 };
+
+        // LINQ query to find the second highest number
+        var secondHighest = numbers
+                            .Distinct()           // remove duplicates
+                            .OrderByDescending(x => x) // sort in descending order
+                            .Skip(1)              // skip the first (highest)
+                            .FirstOrDefault();    // take the next
+
+        Console.WriteLine("Second highest number: " + secondHighest);
+    }
+}
+```
+Explaination
+-   **Distinct()** → removes duplicates so second highest is correct.
+-   **OrderByDescending()** → sorts numbers from highest → lowest.
+-   **Skip(1)** → skips the first (highest).
+-   **FirstOrDefault()** → takes the second one safely (returns 0 if array is empty).
+### Write a program to sort the integers in array without using inbuilt function in C#.
+```csharp
+using System;
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = { 64, 34, 25, 12, 22, 11, 90 };
+        Console.WriteLine("Original array:");
+        PrintArray(numbers);
+        BubbleSort(numbers);
+        Console.WriteLine("Sorted array:");
+        PrintArray(numbers);
+    }
+    
+    // Method to perform bubble sort
+    static void BubbleSort(int[] arr)
+    {
+        int n = arr.Length;
+        for (int i = 0; i < n - 1; i++)
+        {
+            // Last i elements are already in place
+            for (int j = 0; j < n - i - 1; j++)
+            {
+                // Traverse the array from 0 to n-i-1
+                // Swap if the element found is greater than the next element
+                if (arr[j] > arr[j + 1])
+                {
+                    // Swap elements
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+    
+    // Method to print the array
+    static void PrintArray(int[] arr)
+    {
+        foreach (int num in arr)
+        {
+            Console.Write(num + " ");
+        }
+        Console.WriteLine();
+    }
+}
+```

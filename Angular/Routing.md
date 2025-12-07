@@ -63,3 +63,7 @@ const routes: Routes = [
 { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
 ];
 ```
+-   **CanActivate** → Allow/deny entering a route.
+-   **CanDeactivate** → Prevent leaving a route.
+-   **Resolve** → Pre-fetch data before route loads.
+-   **CanLoad** → Prevent lazy-loaded module loading.

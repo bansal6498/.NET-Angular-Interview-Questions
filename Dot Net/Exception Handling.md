@@ -111,3 +111,14 @@ Using just `throw` without specifying the exception object rethrows the original
 ### When to Use Each:
 -   Use `throw` when you need to rethrow the exception without altering its stack trace. This is the most common and preferred way to rethrow exceptions because it retains the original context.
 -   Use `throw ex` only if you need to modify the exception (for example, adding extra information) or want to handle it in a different way. But be mindful that it will reset the stack trace, which can lead to less meaningful error logs.
+### Error Handling in ASP.NET Core
+Options:
+-   **DeveloperExceptionPage** → Shows detailed errors (for dev).
+-   **UseExceptionHandler** → Centralized error page in production.
+-   **UseStatusCodePages** → For handling HTTP status codes (404, 500).
+-   **Try-catch in Middleware** → Custom handling/logging.
+-   **Filters (for MVC)** → `ExceptionFilterAttribute` for controller errors.
+#### 🧩 Example
+```csharp
+app.UseExceptionHandler("/Home/Error"); // Global handle
+```

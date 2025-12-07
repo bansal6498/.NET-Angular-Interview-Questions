@@ -97,4 +97,7 @@ export class ChildComponent {
     }
 }
 ```
-In this example, the `childEvent` is emitted from the child component, and the parent component listens to this event using `(childEvent)="receiveData($event)"`.
+In this example, the `childEvent` is emitted from the child component, and the parent component listens to this event using `(childEvent)="receiveData($event)"`.</br>
+-   **@Input()** → Pass data from parent → child.
+-   **@Output()** → Emit events from child → parent.
+-   **@ViewChild()** → Access child component/template element directly in parent.

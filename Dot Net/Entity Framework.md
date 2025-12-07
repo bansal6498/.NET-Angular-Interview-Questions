@@ -14,3 +14,35 @@ var data = db.Users
              .Take(pageSize)
              .ToList();
 ```
+#### How to fetch only Active records from all 100 tables in EF without adding WHERE Active = 1 everywhere?
+**Answer:**
+Use global query filters (EF Core) plus a shared interface/base type.
+#### 🧩 Example
+```csharp
+public interface IHasIsActive { bool IsActive { get; set; } }
+
+public class Employee : IHasIsActive
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public bool IsActive { get; set; } = true;
+}
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    // Apply to all entities implementing IHasIsActive
+    foreach (var entityType in modelBuilder.Model.GetEntityTypes()
+             .Where(t => typeof(IHasIsActive).IsAssignableFrom(t.ClrType)))
+    {
+        var method = typeof(MyDbContext).GetMethod(nameof(ApplyIsActiveFilter),
+                      BindingFlags.NonPublic | BindingFlags.Static)
+                      .MakeGenericMethod(entityType.ClrType);
+        method.Invoke(null, new object[] { modelBuilder });
+    }
+}
+
+private static void ApplyIsActiveFilter<TEntity>(ModelBuilder builder) where TEntity : class, IHasIsActive
+{
+    builder.Entity<TEntity>().HasQueryFilter(e => EF.Property<bool>(e, nameof(IHasIsActive.IsActive)) == true);
+}
+```

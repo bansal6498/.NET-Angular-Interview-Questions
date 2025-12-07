@@ -95,3 +95,28 @@ Token theft, expiration handling, and secure storage of tokens (e.g., in localSt
 -   Use role-based or claim-based authorization for fine-grained access control
 ### Conclusion
 Authentication and authorization are essential components of securing an application, and .NET provides multiple ways to handle them. JWT offers a flexible and scalable way to authenticate users in modern web applications. By understanding the differences between authentication and authorization and mastering the implementation of JWT, developers can build secure, scalable applications.
+#### How to handle JWT token theft?
+**Answer:**
+Short list of practical defenses and mitigation steps:
+-   Short-lived access tokens (e.g., 5–15 minutes) + refresh tokens for session continuity.
+-   Refresh token rotation: issue a new refresh token on each use and revoke the previous one (detect reuse → revoke session).
+-   Store refresh tokens securely (HttpOnly, Secure cookies or secure storage) — never store long-lived tokens in plain localStorage if XSS is a concern.
+-   Blacklist / revocation store: keep server-side blacklist (or use token reference IDs / `jti`) so you can revoke tokens before expiry. Use token introspection for reference tokens.
+-   Detect anomalies: IP/geolocation/device changes, impossible travel, rapid requests → force re-auth or revoke tokens.
+-   Revoke on logout(s): record active tokens per user and clear them when needed.
+-   Bind tokens to device or client (fingerprint) when appropriate — increases complexity but raises the bar for attackers.
+-   MFA for sensitive actions and revalidation for critical flows.
+-   Use TLS everywhere and apply Content Security Policy (CSP) to reduce XSS risk.
+-   Limit scope/privileges encoded in tokens; use claims tightly.
+-   Monitor & alert on suspicious token activity.
+
+Example pattern: short access token + rotating refresh token stored HttpOnly cookie + server-side refresh token DB with `jti, expires, revoked` flags and last-used timestamp. On reuse of a revoked/rotated refresh token, revoke all sessions and force re-login.</br>
+#### Access Token
+-   An Access Token is a credential issued to a client after successful authentication.
+-   It proves the identity and grants access to protected resources.
+-   In .NET Core, usually a JWT.
+-   Used in `Authorization: Bearer <token> header`.</br>
+
+✅ Difference from Refresh Token:
+-   **Access Token** → short-lived, used for API access.
+-   **Refresh Token** → long-lived, used to get new access tokens without logging in again.

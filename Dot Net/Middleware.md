@@ -72,3 +72,53 @@ app.Run();
 -   Flexibility: The middleware pipeline is highly configurable, allowing for conditional execution of middleware based on the request context.
 
 #### For custom middleware the method name is always InvokeAsync as mentioned in earlier example also.
+#### Explain Custom Middleware.
+**Answer:**
+```csharp
+public class RequestLoggingMiddleware
+{
+    private readonly RequestDelegate _next;
+    public RequestLoggingMiddleware(RequestDelegate next) => _next = next;
+
+    public async Task Invoke(HttpContext context)
+    {
+        Console.WriteLine($"Request: {context.Request.Method} {context.Request.Path}");
+        await _next(context); // pass to next middleware
+    }
+}
+
+// Register in Program.cs
+app.UseMiddleware<RequestLoggingMiddleware>();
+```
+#### What is short circuiting of middle ware ?
+**Answer:**
+**Short-circuiting** means a middleware decides **not to call the next middleware** and instead **ends the pipeline early** by directly generating a response.
+👉 In other words, it **breaks the chain** and prevents execution of the rest of the middlewares.
+#### 🧩 Example
+-   If request has no Authorization header → pipeline short-circuits here.
+-   If header exists → request flows to the next middleware.
+```csharp
+app.Use(async (context, next) =>
+{
+    if (!context.Request.Headers.ContainsKey("Authorization"))
+    {
+        context.Response.StatusCode = 401;
+        await context.Response.WriteAsync("Unauthorized");
+        return;  // short-circuit: next() is not called
+    }
+
+    await next(); // continue to next middleware if authorized
+});
+```
+#### Common Use Cases of Short-Circuiting
+1.  Authentication & Authorization
+    -   Block unauthorized requests early before hitting controllers.
+2.  CORS / Security Policies
+    -   Stop invalid origins immediately.
+3.  Rate Limiting / Throttling
+    -   Deny requests if limits are exceeded.
+4.  Static File Middleware
+    -   If the requested file exists, return it and stop.
+5.  Error handling / Custom responses
+    -   Return a friendly error page without continuing the pipeline.</br>
+**Short-circuiting of middleware** in .NET Core means a middleware **does not call `next()`**, thereby ending the request pipeline early and sending a response directly. It’s useful for **security checks, error handling, and performance optimizations**.

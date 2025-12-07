@@ -116,3 +116,30 @@ public class MyController : ControllerBase
 `AllowAnyOrigin()` allows all domains to access the resource, whereas `WithOrigins("https://frontend.com")` specifies a particular domain that is allowed to access the resource.
 ### Conclusion
 CORS is a critical aspect of web security that helps manage cross-origin requests. It ensures that only trusted origins can access resources, preventing unauthorized access. In ASP.NET Core, CORS is configured easily through the Startup.cs file.
+#### What is a Preflight request?
+**Answer:**
+-   For non-simple requests (like `PUT`, `DELETE`, or with custom headers), the browser sends an `OPTIONS` request first.
+-   This preflight request asks the server if the real request is allowed.
+-   Server responds with allowed methods/headers via CORS headers.
+#### What are “simple” vs “non-simple” CORS requests?
+**Answer:**
+-   **Simple**: `GET`, `POST`, or `HEAD` requests with only standard headers (`Accept`, `Content-Type = text/plain`, etc.).
+-   **Non-simple**: Requests with custom headers, credentials, or non-standard methods (`PUT`, `DELETE`) → trigger a **preflight**.
+#### What happens if CORS is not configured properly?
+**Answer:**
+-   The browser will block the request.
+-   Developer sees an error in console like:
+`“Access to fetch at '...' from origin '...' has been blocked by CORS policy.”`
+#### Difference between `AllowAnyOrigin()` and `WithOrigins()` in .NET Core?
+**Answer:**
+-   **AllowAnyOrigin()** → allows all origins `(*)` not secure for production.
+-   **WithOrigins("https://example.com")** → restricts to specific domains (best practice).
+#### Can you use AllowAnyOrigin() with credentials?
+**Answer:**
+-   ❌ No.
+-   According to CORS spec, if `Access-Control-Allow-Credentials: true`, then `Access-Control-Allow-Origin` must be a **specific origin**, not `*`.
+#### Who enforces CORS — browser or server?
+**Answer:**
+-   The browser enforces CORS.
+-   The server only declares what is allowed through headers.
+-   Non-browser clients (like Postman, cURL) bypass CORS checks.

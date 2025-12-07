@@ -35,3 +35,18 @@ class Program
 #### What is the difference between a property and a field in C#?
 **Answer:**
 A field is a variable defined directly within a class or struct. A property is a member that provides a way to access the value of a field, but it can include logic for validation or transformation of the value. Properties are accessed like fields but can encapsulate logic via getters and setters.
+#### Difference between Abstraction vs Encapsulation
+**Answer:**
+-   **Abstraction**: Hides implementation details.
+-   **Encapsulation**: Hides data using access modifiers (private, public, etc.).
+#### Can you explain the different Access Specifiers in .NET and why they matter?
+**Answer:**
+Access specifiers (modifiers) define the scope/visibility of classes, methods, and members.
+-   **public** → Accessible anywhere.
+-   **private** → Accessible only inside the class.
+-   **protected** → Accessible in the class + derived classes.
+-   **internal** → Accessible only within the same assembly.
+-   **protected internal** → Accessible in the same assembly + derived classes (even in other assemblies).
+-   **private protected** → Accessible only in the same assembly AND only in derived classes.</br>
+
+**✅ Why they matter** → They enforce **encapsulation**, protect sensitive code, and define API boundaries.

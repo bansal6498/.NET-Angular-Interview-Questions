@@ -124,6 +124,13 @@ Password must be at least 6 characters.
 #### Use Template-Driven Forms when:
 -   The form is simple and doesn’t require much customization.
 -   You prefer a declarative approach with minimal code in the component.
-#### How do you add validations in Reactive Forms?
+
+| Feature     | Template-driven                          | Reactive                              |
+| ----------- | ---------------------------------------- | ------------------------------------- |
+| Setup       | Uses HTML template (`ngModel`)           | Uses `FormControl`, `FormGroup` in TS |
+| Control     | Defined in template                      | Defined in component class            |
+| Validation  | Template-based (`required`, `minlength`) | Class-based (`Validators.required`)   |
+| Scalability | Simple, good for small forms             | Better for large & complex forms      |
+### How do you add validations in Reactive Forms?
 **Answer:**
 Validations are added using validators like `Validators.required`, `Validators.minLength`, etc., in the form control or form group.

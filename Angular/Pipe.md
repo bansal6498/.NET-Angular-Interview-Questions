@@ -82,7 +82,9 @@ Pure pipes are more efficient because they only re-execute when their inputs cha
 -   Use `trackBy` in ngFor with large lists to improve the performance of the rendering and avoid unnecessary recalculations.
 #### Can pipes be used with observables in Angular?
 **Answer:**
-Yes, pipes can be used with observables in Angular. The async pipe is commonly used to subscribe to observables in templates and automatically unsubscribe when the component is destroyed.
+Yes, pipes can be used with observables in Angular. The async pipe is commonly used to subscribe to observables in templates and automatically unsubscribe when the component is destroyed.</br>
+-    Subscribes to an Observable/Promise and returns latest value.
+-    Handles subscription + unsubscription automatically.
 ```html
 <p>{{ observableData | async }}</p>
 ```

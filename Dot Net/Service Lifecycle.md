@@ -125,3 +125,18 @@ Example: A service that interacts with a database using Entity Framework.
 -   **Singleton:**
 Use for services that are expensive to create, do not hold request-specific state, and can be shared across the application.</br>
 Example: Configuration services, logging services, or caching services.
+### 🔹 Visualizing the Difference
+
+| Lifetime  | Instance per Request | Instance per App | Best For                         |
+| --------- | -------------------- | ---------------- | -------------------------------- |
+| Transient | New every time       | ❌                | Lightweight, stateless services  |
+| Scoped    | Same within request  | ❌                | Request-based data, Repositories |
+| Singleton | ❌                    | Same instance    | Config, cache, logging           |
+#### **🔑 Interview-Ready Answer**
+
+“In .NET Core DI, services can be registered as Transient, Scoped, or Singleton.
+-   **Transient** creates a new instance every time it’s requested.
+-   **Scoped** creates one instance per request, reused within that request.
+-   **Singleton** creates a single instance for the entire application lifetime.
+
+Typically, lightweight stateless services are transient, repositories and unit-of-work are scoped, and shared services like configuration or caching are singletons.”

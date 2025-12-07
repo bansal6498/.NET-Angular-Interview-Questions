@@ -31,6 +31,9 @@ export class HighlightDirective {
 #### What is ngOnInit in directives, and when is it called?
 **Answer:**
 `ngOnInit` is a lifecycle hook in Angular that is called after the directive’s data-bound properties are initialized. This hook is typically used to perform initialization logic. It is called once after the directive’s constructor and before any other lifecycle hooks.
+#### ngOnInit() vs constructor()
+-   **constructor()** → Used for class initialization, dependency injection. Runs first.
+-   **ngOnInit()** → Lifecycle hook, called once Angular initializes bindings. Best for data-fetching logic.
 ### Key Concepts of Directives in Angular
 1. **Selectors:** Directives are applied to DOM elements via a selector. The selector can be:
     -   **Element Selector:** Applied as an HTML element tag.

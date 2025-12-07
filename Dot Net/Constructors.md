@@ -1,4 +1,4 @@
-## Constructor Overloading
+## Constructors
 A class in C# can have multiple constructors. This is called **constructor overloading**. It allows you to define multiple constructors with different sets of parameters in the same class, enabling flexibility when creating objects of the class.
 #### 🧩 Example
 ```csharp
@@ -60,3 +60,26 @@ Name: Bob, Age: 25
 public Person(string name) : this(name, 0) { }
 ```
 3.  **Use Case:** Constructor overloading is useful when you want to provide multiple ways to initialize a class, with different levels of detail or default values.
+#### 🟥 🟥 Suppose abstract class have constructor and base also have. Then what will be the sequence of constructor execution?
+**Answer:**
+In C#, the rule is:</br>
+👉 Base class constructor runs first, then derived class constructor.
+This applies even if the base is an abstract class.
+
+✅ Sequence:
+-   Top-most base class constructor
+-   Abstract (intermediate) class constructor(s)
+-   Derived (concrete) class constructor
+
+This ensures all parent-level initialization is done before the child class starts.
+
+🔑 Key Rules
+-   Constructors are always called from top (base) to bottom (derived).
+-   If you don’t explicitly call base(...), the compiler tries to call the base **default constructor**.
+    -   If the base has **no default constructor**, you **must** call base(...).
+-   Abstract class constructors participate in this chain just like normal base classes.
+
+⚡ Quick Summary:
+-   Sequence = Base → Abstract → Derived.
+-   Parameterized constructors: You control what goes to base using : base(...).
+-   If you forget and no default exists → compilation error.

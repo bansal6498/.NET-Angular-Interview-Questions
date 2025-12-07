@@ -77,3 +77,27 @@ Role-Based Access Control (RBAC) in Azure helps manage who has access to Azure r
 #### What is Azure Security Center?
 **Answer:**
 Azure Security Center is a unified infrastructure security management system that strengthens the security posture of your data centers and provides advanced threat protection across your hybrid workloads in the cloud and on-premises.
+#### What is Elastic Search?
+**Answer:**
+“Elasticsearch is a distributed, open-source search and analytics engine built on top of Apache Lucene. It stores data as JSON documents and uses inverted indexes to provide near real-time full-text search, filtering, and analytics at scale. It’s widely used for application search, log analytics, monitoring, and real-time dashboards, often as part of the ELK Stack.”
+-   Elasticsearch is an open-source search and analytics engine built on top of Apache Lucene.
+-   It is part of the ELK Stack (Elasticsearch, Logstash, Kibana).
+-   It is designed for full-text search, structured/unstructured data search, real-time analytics, and log monitoring.
+#### Explain azure key vault and how to use/integrate in .net core application?
+**Answer:**
+-   **Azure Key Vault** is a cloud service for **secrets management**.
+-   It securely stores and manages **secrets, keys, and certificates**.
+-   Typical use cases:
+    -   Store **connection strings, API keys, passwords** (instead of hardcoding in config).
+    -   Manage **encryption keys** (for data-at-rest encryption).
+    -   Manage and auto-rotate **TLS/SSL certificates**.</br>
+
+**Why use it?**
+-   **Centralized secrets management** → no secrets in code or configs.
+-   **Secure access** via Azure AD authentication and RBAC.
+-   **Audit logging** → track who accessed what and when.
+-   **Automated rotation** → rotate secrets/certs without code changes.
+-   **Compliance** → meets enterprise security standards.</br>
+
+**🛠️ How to Integrate Azure Key Vault with .NET Core App**
+In .NET Core, you integrate by adding Key Vault to your app configuration (using `AddAzureKeyVault`) with `DefaultAzureCredential`. From then, you can access secrets as normal config values, keeping your app secure and compliant.

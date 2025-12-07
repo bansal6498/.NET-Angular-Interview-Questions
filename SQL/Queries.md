@@ -159,4 +159,23 @@ SELECT employees.name, departments.department_name
 FROM employees
 LEFT JOIN departments ON employees.department_id = departments.department_id;
 ```
-**Explanation**: This query retrieves all employees, including those who are not assigned to a department. For those without a department, the department_name will be NULL.
+**Explanation**: This query retrieves all employees, including those who are not assigned to a department. For those without a department, the department_name will be NULL.</br>
+
+18. Query to get duplicate salaries:
+```sql
+SELECT salary
+FROM emp
+GROUP BY salary
+HAVING COUNT(*) > 1;]
+```
+19. Employees with duplicate salaries:
+```sql
+SELECT *
+FROM emp
+WHERE salary IN (
+    SELECT salary
+    FROM emp
+    GROUP BY salary
+    HAVING COUNT(*) > 1
+);
+```

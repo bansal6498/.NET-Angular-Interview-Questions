@@ -108,3 +108,52 @@ SELECT department, AVG(salary) FROM employees GROUP BY department;
 -   Schema flexibility (rapid iterations).
 -   High write scalability.
 -   Examples: Real-time analytics, IoT data, social media feeds.
+#### What are the differences between DELETE and TRUNCATE commands in SQL?
+**Answer:**
+-   **DELETE**: Removes rows one at a time and can include a WHERE clause to specify which rows to delete. It logs individual row deletions and can be rolled back.
+    ```sql
+    DELETE FROM Employees WHERE EmployeeId = 1;
+    ```
+-   **DELETE**: Removes rows one at a time and can include a WHERE clause to specify which rows to delete. It logs individual row deletions and can be rolled back.
+    ```sql
+    TRUNCATE TABLE Employees;
+    ```
+#### Explain Master slave DB pattern
+**Answer:**
+1.  Definition
+    -   A **master (primary)** database handles all **write** operations (INSERT, UPDATE, DELETE).
+    -   One or more **slaves (replicas/secondaries)** handle **read** operations (SELECT).
+    -   Slaves are kept in sync with the master via **replication** (synchronous or asynchronous).
+2.  How it Works
+    1.  Client sends a **write request** → goes to the master.
+    2.  Master processes the change and updates its own data.
+    3.  Master pushes the change to slaves (replication mechanism).
+    4.  Read requests can go to any slave to reduce load on the master.
+3.  Benefits
+    -   ✅ Scalability (Read-heavy apps) → You can add more slaves to spread read traffic.
+    -   ✅ Performance → Master isn’t overloaded with reads, focuses on writes.
+    -   ✅ High Availability → If the master fails, one of the slaves can be promoted to master.
+    -   ✅ Backup Safety → Backups can be taken from slaves without affecting master performance.
+4.  Problems / Trade-offs
+    -   ⚠️ **Replication Lag** → Slaves may be slightly behind master (eventual consistency).
+    -   ⚠️ **Complex Failover** → Promoting a slave to master requires careful coordination.
+    -   ⚠️ **Write Scalability** → Writes still bottleneck at the master.
+    -   ⚠️ **Application Complexity** → App needs logic to route reads vs writes.
+5.  Use Cases
+    -   E-commerce websites: master handles transactions, slaves handle product catalog browsing.
+    -   Analytics platforms: write incoming events to master, query large reports from slaves.
+    -   Large-scale SaaS apps: separate transactional writes from heavy reporting reads.
+6.  Diagram (Conceptual)
+
+                ┌───────────┐
+                │   Client  │
+                └─────┬─────┘
+                      │
+             ┌────────┴────────┐
+             │                 │
+        (Write Ops)       (Read Ops)
+            │                 │
+        ┌────▼─────┐        ┌───▼─────┐
+        │ Master   │◀──────▶│ Slave   │
+        │ (Primary)│   ...  │(Replica)│
+        └──────────┘        └─────────┘

@@ -36,3 +36,79 @@
     }
     ```
     
+#### Give me an simple code example to implement OOPS concept in C#
+**Answer:**
+```csharp
+using System;
+
+// 🔹 Abstraction (abstract class hides implementation details)
+public abstract class Vehicle
+{
+    // 🔹 Encapsulation (private field with public property)
+    private string _brand;
+
+    public string Brand
+    {
+        get { return _brand; }
+        set { _brand = value; }
+    }
+
+    // Abstract method (must be implemented by subclasses)
+    public abstract void Start();
+
+    // Virtual method (can be overridden)
+    public virtual void DisplayInfo()
+    {
+        Console.WriteLine($"This is a vehicle of brand: {Brand}");
+    }
+}
+
+// 🔹 Inheritance (Car inherits from Vehicle)
+public class Car : Vehicle
+{
+    public int Wheels { get; set; }
+
+    public Car(string brand, int wheels)
+    {
+        Brand = brand;
+        Wheels = wheels;
+    }
+
+    // Implementation of abstract method
+    public override void Start()
+    {
+        Console.WriteLine($"{Brand} car is starting with {Wheels} wheels!");
+    }
+
+    // 🔹 Polymorphism (method overriding)
+    public override void DisplayInfo()
+    {
+        Console.WriteLine($"Car Brand: {Brand}, Wheels: {Wheels}");
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        // 🔹 Polymorphism (base reference, derived object)
+        Vehicle myCar = new Car("Toyota", 4);
+
+        myCar.Start();       // Calls overridden method in Car
+        myCar.DisplayInfo(); // Calls overridden method in Car
+    }
+}
+
+```
+🔹 Explanation
+-   Encapsulation → _brand is private, accessed via Brand property.
+-   Inheritance → Car inherits from Vehicle.
+-   Polymorphism → DisplayInfo() is overridden, and Vehicle myCar = new Car() uses base reference but executes child class method.
+-   Abstraction → Vehicle is an abstract class, can’t be instantiated, only extended.
+</br>
+
+Output
+```csharp
+Toyota car is starting with 4 wheels!
+Car Brand: Toyota, Wheels: 4
+```

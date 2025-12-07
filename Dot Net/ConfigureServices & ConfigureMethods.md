@@ -82,3 +82,30 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 1.  `ConfigureServices` is called during the startup process to register services with the DI container.
 2.  After `ConfigureServices`, `Configure` is called to set up the application's middleware pipeline.
 3.  The middleware defined in the `configure` processes incoming HTTP requests and outgoing `responses`.
+#### How do you handle configuration in .NET Core applications?
+**Answer:**
+-   Configuration in .NET Core is managed using the `appsettings.json` file, environment variables, and other configuration sources.
+-   The `IConfiguration` interface is used to access configuration settings.
+#### 🧩 Example
+```csharp
+public class Startup
+{
+    public Startup(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        var mySetting = Configuration["MySetting"];
+        // Use the configuration setting as needed
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        // Middleware configuration
+    }
+}
+```
